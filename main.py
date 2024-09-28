@@ -1,5 +1,7 @@
+# Class main
+
 from tkinter import *
-from PIL import ImageTk, Image
+from pictures_loader import PictureLoader
 
 # main window
 my_window = Tk()
@@ -8,22 +10,20 @@ my_window.resizable(False, False)
 my_window.title("Black Jack")
 
 #image def
-def load_image():
-    img = Image.open("Images\\1_1.png")
-    # images = img.resize((139, 100))
-    image_format = ImageTk.PhotoImage(img)
-    image_label.config(image = image_format)
-    image_label.img = image_format
+# def load_image():
+#     img = Image.open("Images\\1_1.png")
+#     # images = img.resize((139, 100))
+#     image_format = ImageTk.PhotoImage(img)
+#     image_label.config(image = image_format)
+#     image_label.img = image_format
 
-    image_label2.config(image = image_format)
-    image_label2.img = image_format
-
-
+#     image_label2.config(image = image_format)
+#     image_label2.img = image_format
 
 
 # Text label
 text_label = Label(my_window, font=("Helvetica", 10), text="text place")
-text_label.place(x= 20,y= 0)
+text_label.place(x= 20,y= 100)
 
 # Button
 first_button = Button(my_window, width=7, height=3, text="click")
@@ -35,6 +35,11 @@ image_label2 = Label(my_window)
 image_label.grid(column = 1, row = 1)
 image_label2.place(x = 30, y =10)
 
+#inicialization picture_loader:
+picture= PictureLoader("Images/1_1.png")
+
+
 # Main loop
-load_image()
+picture.display_imagine(image_label)
+picture.display_imagine(image_label2)
 my_window.mainloop()
