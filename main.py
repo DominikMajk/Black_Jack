@@ -19,20 +19,6 @@ def show_card():
     print(y)
 
 
-
-
-#image def
-# def load_image():
-#     img = Image.open("Images\\1_1.png")
-#     # images = img.resize((139, 100))
-#     image_format = ImageTk.PhotoImage(img)
-#     image_label.config(image = image_format)
-#     image_label.img = image_format
-
-#     image_label2.config(image = image_format)
-#     image_label2.img = image_format
-
-
 # Text label
 #text_label = Label(my_window, font=("Helvetica", 10), text="text place")
 #text_label.place(x= 100,y= 100)
@@ -48,8 +34,7 @@ image_label.place(x = 20, y = 0)
 image_label2.place(x = 30, y =10)
 
 #inicialization picture_loader:
-picture= PictureLoader("\PNG-cards-1.3\\2_of_hearts.png")
-
+picture= PictureLoader("path")
 
 # Main loop
 picture.display_imagine(image_label)
