@@ -1,5 +1,4 @@
 # Class PictureLoader
-from itertools import count
 
 from PIL import ImageTk, Image
 import json
@@ -15,10 +14,11 @@ class PictureLoader:
         with open('cards.json', 'r') as file:
             self.cards = json.load(file)
 
-
         # list of image labels
         self.image_labels = []
+        self.oponent_image_labels = []
         self.max_card = 5
+        self.max_oponent_card = 5
 
         # function to add path to choose random picture
         random_number = random.randrange(0,len(self.cards))
@@ -40,23 +40,12 @@ class PictureLoader:
         image_label.img = image_format
 
     def count_score(self, card):
-        try:
-            value = int(card["value"])
-            if value > 10:
-                return 10
-            else:
-                return value
+        value = int(card["value"])
+        if value > 10:
+            return 11
+        else:
+            return value
 
-        except KeyError as e:
-                print(f"Nemůžu najít hodnotu karty. Chybějící klíč: {e}")
-                return 0  # nebo nějaká výchozí hodnota
-        except ValueError:
-            print("Hodnota karty není platné číslo.")
-            return 0  # nebo nějaká výchozí hodnota
-
-
-
-        # button for show card
     def show_card(self):
         if len(self.image_labels) < self.max_card:  # check if count of card is less that than maximum cards in game
 
@@ -64,30 +53,38 @@ class PictureLoader:
             self.random_number = random.randrange(0, len(self.cards))
             self.current_card = self.cards[self.random_number]
 
-            # try:
-            #     # get value of card and calculate score
-            #     score = self.count_score(self.current_card)
-            #     print(f"Selected card score is {self.current_card['value']} of {self.current_card['suit']}")
-            #     print(f"Score: {score}")
-            # except KeyError as e:  #error specificate
-            #     print(f"Nejde spočítat score. Chybějící klíč: {e}")
-            # except Exception as e:
-            #     print(f"Došlo k chybě: {e}")
-
-
-            # create new card label
+            # create new card label and position of label
             new_image_label = Label(self.my_window)
             self.display_imagine(new_image_label)
-
-            # position of new label
             x_position = 10 + len(self.image_labels) * 50
-            new_image_label.place(x=x_position, y=0)
+            new_image_label.place(x=x_position, y=10)
 
             # append list of labels
             self.image_labels.append(new_image_label)
 
-            score = self.count_score(self.current_card)
-            print(score)
+            # remove display card from list (dont show card twice)
+            del self.cards[self.random_number]
+
+    def show_oponent_card(self):
+        if len(self.oponent_image_labels) < self.max_oponent_card:  # check if opponent's card count is less than maximum cards
+
+            # function to add path to choose random picture for next card
+            self.random_number = random.randrange(0, len(self.cards))
+            self.current_card = self.cards[self.random_number]
+
+            # create new card label and position of label for opponent
+            new_image_label = Label(self.my_window)
+            self.display_imagine(new_image_label)
+            x_position = 10 + len(self.oponent_image_labels) * 50
+            new_image_label.place(x=x_position, y=150
+                                  )  # place the opponent's cards at y=150
+
+            # append list of opponent's labels
+            self.oponent_image_labels.append(new_image_label)
+
+            # remove displayed card from list to prevent showing the same card twice
+            del self.cards[self.random_number]
+
 
 
 

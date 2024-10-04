@@ -50,5 +50,6 @@
     {"id": 49, "value": "11", "suit": "Clubs", "image_path": "ace_of_clubs.png"},
     {"id": 50, "value": "11", "suit": "Diamonds", "image_path": "ace_of_diamonds.png"},
     {"id": 51, "value": "11", "suit": "Hearts", "image_path": "ace_of_hearts.png"},
-    {"id": 52, "value": "11", "suit": "Spades", "image_path": "ace_of_spades.png"}
+    {"id": 52, "value": "11", "suit": "Spades", "image_path": "ace_of_spades.png"},
+    {"id": 53, "value": "0", "suit": "All", "image_path": "backround.png"}
 ]
