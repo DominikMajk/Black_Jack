@@ -20,13 +20,15 @@ class PictureLoader:
         self.max_card = 5
         self.max_oponent_card = 5
 
+        self.backround = "backround.png"
+
         # function to add path to choose random picture
         random_number = random.randrange(0,len(self.cards))
         current_card = (self.cards[random_number])
 
-    def display_imagine(self, image_label,scale_factor = 6):
+    def display_imagine(self, image_label, scale_factor = 6):
         #open path
-        img = Image.open((f"PNG-cards-1.3\\{self.current_card["image_path"]}"))
+        img = Image.open(f"PNG-cards-1.3\\{self.current_card['image_path']}")
 
         # images resize define
         width, height = img.size
@@ -65,27 +67,39 @@ class PictureLoader:
             # remove display card from list (dont show card twice)
             del self.cards[self.random_number]
 
+    def reveal_hidden_card(self):
+        if len(self.oponent_image_labels) > 0 and self.hidden_card:
+            # Získat první label karty (backround) a nahradit ho skutečnou kartou
+            hidden_card_label = self.oponent_image_labels[0]
+            self.current_card = self.hidden_card  # Nastavit skrytou kartu jako aktuální
+            self.display_imagine(hidden_card_label)  # Znovu vykreslit kartu s pravou hodnotou
+            self.hidden_card = None  # Skrytá karta byla odhalena
+
+
+
     def show_oponent_card(self):
         if len(self.oponent_image_labels) < self.max_oponent_card:  # check if opponent's card count is less than maximum cards
-
-            # function to add path to choose random picture for next card
             self.random_number = random.randrange(0, len(self.cards))
-            self.current_card = self.cards[self.random_number]
+
+            if len(self.oponent_image_labels) == 0:
+                # První karta oponenta je skrytá (backround karta)
+                self.hidden_card = self.cards[self.random_number]  # save the hidden card
+                self.current_card = {"image_path": self.backround}  # nastavit backround pro první kartu
+            else:
+                # Další karty oponenta se zobrazí normálně
+                self.current_card = self.cards[self.random_number]
 
             # create new card label and position of label for opponent
             new_image_label = Label(self.my_window)
             self.display_imagine(new_image_label)
             x_position = 10 + len(self.oponent_image_labels) * 50
-            new_image_label.place(x=x_position, y=150
-                                  )  # place the opponent's cards at y=150
+            new_image_label.place(x=x_position, y=150)  # place the opponent's cards at y=150
 
             # append list of opponent's labels
             self.oponent_image_labels.append(new_image_label)
 
             # remove displayed card from list to prevent showing the same card twice
             del self.cards[self.random_number]
-
-
 
 
 
