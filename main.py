@@ -23,7 +23,30 @@ style.configure("MyButton.TButton",
                 #borderwidth = 20,
                 padding=4,
                 relief="sunken")
-                
+
+# funkce která se zavolá na konci hry a vyhodnotí hru
+def end_game():
+    first_button.place_forget()
+    third_button.place_forget()
+    second_button.place_forget()
+
+    text_result = ""
+
+    if total_score == 21 and opponent_total_score == 21:
+        text_result = "remíza"
+    elif total_score > opponent_total_score and total_score <= 21:
+        text_result = "vyhrál jsi"
+    elif total_score < opponent_total_score and opponent_total_score <= 21:
+        text_result = "prohrál jsi"
+    elif opponent_total_score > 21:
+        text_result = "vyhrál jsi"
+    elif total_score > 21:
+        text_result = "prohrál jsi"
+
+    result_label = Label(my_window, text=text_result, width=8, bg = '#818DF5', relief= "raised", font= ("Helvetica", 12))
+    result_label.place(x=30, y=380)
+
+         
 #inicialization picture_loader:
 picture= PictureLoader("path",my_window)
 total_score = 0
@@ -75,10 +98,6 @@ def opponent_game_score():
     except Exception as e:
         print("Score calculation failed:", e)
 
-# Tlačítko pro hráče
-first_button = ttk.Button(my_window, width=8, text="lízni si", style="MyButton.TButton", command=lambda: [picture.show_card(), game_score(), opponent_game_score()])
-first_button.place(x=30, y=380)
-
 #Funkce, která rozdá první dvě karty při spuštění hry
 def deal_initial_cards():
     # První karta pro hráče
@@ -101,7 +120,7 @@ first_button.place(x=30, y=380)
 
 
 second_button = ttk.Button(my_window, width=8, text="konec", style="MyButton.TButton",
-                             command = picture.reveal_hidden_card)
+                             command = lambda : [end_game(),picture.reveal_hidden_card(), end_game()])
 
 third_button = ttk.Button(my_window, width=8, text="Začít hru", style="MyButton.TButton",
                              command= lambda : [deal_initial_cards(),second_button.place(x=200, y = 380),third_button.place_forget()])
