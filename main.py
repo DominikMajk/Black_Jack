@@ -24,7 +24,7 @@ style.configure("MyButton.TButton",
                 padding=4,
                 relief="sunken")
 
-# funkce která se zavolá na konci hry a vyhodnotí hru
+# funkce která se zavolá na konci hry a vyhodnotí hru  
 def end_game():
     first_button.place_forget()
     third_button.place_forget()
@@ -57,12 +57,13 @@ def game_score(tt = 0):
     global total_score
     total_score += score
 
-    if total_score == 21:
-        score_label.config(text=str("výhra"))
-    elif total_score > 21:
-        score_label.config(text=str("prohrál jsi"))
-    else:
-        score_label.config(text=int(total_score))
+    #pokud by chtěl zobrazit score labelu player
+    # if total_score == 21:
+    #     score_label.config(text=str("výhra"))
+    # elif total_score > 21:
+    #     score_label.config(text=str("prohrál jsi"))
+    # else:
+    score_label.config(text=int(total_score))
 
 def opponent_game_score():
     global opponent_total_score
@@ -131,11 +132,11 @@ rules_button = ttk.Button(my_window, width=2, text="?", style="MyButton.TButton"
                             command= lambda : show_rules(my_window))
 rules_button.place(x=350, y = 20)
 
-# game description labels
-score_label = Label(width=8, bg = '#818DF5', relief= "raised", font= ("Helvetica", 12), text = "score")
+#game description labels, label je informativní a ve finální verzi není aplikovaný
+score_label = Label(width=8, bg = '#818DF5', relief= "raised", font= ("Helvetica", 12), text = "Player")
 score_label.place(x = 30, y = 300)
 
-opponent_score_label = Label(width=8, bg = '#818DF5', relief= "raised", font= ("Helvetica", 12), text = "opponent")
+opponent_score_label = Label(width=8, bg = '#818DF5', relief= "raised", font= ("Helvetica", 12), text = "Opponent")
 opponent_score_label.place(x = 200, y = 300)
 
 # nahradí se tlačítko "začít hru" za "lízni si"
