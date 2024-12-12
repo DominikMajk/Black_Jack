@@ -87,44 +87,62 @@ def opponent_game_score():
             opponent_score_label.config(text=int(opponent_total_score))
             print("Opponent score updated:", opponent_total_score)
 
-            # Oponent táhne novou kartu pouze pokud je skóre méně než 17
-            if opponent_total_score < 17:
-                picture.show_oponent_card()
-                opponent_game_score()  # Znovu přepočítat skóre oponenta
-            else:
-                print("Opponent stops drawing cards.")
+            # !!!!!tady je zakopaný pes!!!!!
+        #     # Oponent táhne novou kartu pouze pokud je skóre méně než 17
+        #     if opponent_total_score < 17 and game_score > 21:
+        #         picture.show_oponent_card()
+        #         opponent_game_score()  # Znovu přepočítat skóre oponenta
+        #     else:
+        #         print("Opponent stops drawing cards.")
         else:
             print("Opponent score is 17 or higher, no more cards drawn.")
 
     except Exception as e:
         print("Score calculation failed:", e)
 
-#Funkce, která rozdá první dvě karty při spuštění hry
-def deal_initial_cards():
+# hlídá aby si hráč nepřelízal
+def max_cards():
+    if opponent_total_score < 17 and game_score > 21:
+                picture.show_oponent_card()
+                opponent_game_score()  # Znovu přepočítat skóre oponenta
+    else:
+        print("Opponent stops drawing cards.")
+
+#Funkce, která rozdá první dvě karty pro hráče
+def deal_initial_cards_for_player():
     # První karta pro hráče
     picture.show_card()
     game_score()
-    # První karta pro oponenta
-    picture.show_oponent_card()
-    opponent_game_score()
     # Druhá karta pro hráče
     picture.show_card()
     game_score()
-    # Druhá karta pro oponenta
+
+
+    picture.show_oponent_card()
+    opponent_game_score()
     picture.show_oponent_card()
     opponent_game_score()
 
+
+## Funkce, která rozdá první dvě karty pro opponenta
+# def deal_initial_cards_for_opponent():
+#     picture.show_oponent_card()
+#     opponent_game_score()
+#     picture.show_oponent_card()
+#     opponent_game_score()
+
+
 # Button
 first_button = ttk.Button(my_window, width=8, text="lízni si", style="MyButton.TButton", 
-                          command=lambda: [picture.show_card(), game_score(), opponent_game_score()])
+                          command=lambda: [picture.show_card(), game_score()])
 first_button.place(x=30, y=380)
 
 
 second_button = ttk.Button(my_window, width=8, text="konec", style="MyButton.TButton",
-                             command = lambda : [end_game(),picture.reveal_hidden_card(), end_game()])
+                             command = lambda : ["deal_initial_cards_for_opponent()", end_game(),picture.reveal_hidden_card(), end_game()])
 
 third_button = ttk.Button(my_window, width=8, text="Začít hru", style="MyButton.TButton",
-                             command= lambda : [deal_initial_cards(),second_button.place(x=200, y = 380),third_button.place_forget()])
+                             command= lambda : [deal_initial_cards_for_player(), second_button.place(x=200, y = 380),third_button.place_forget()])
 third_button.place(x=30, y=380)
 
 #button for show game rules
