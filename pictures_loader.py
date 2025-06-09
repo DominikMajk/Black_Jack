@@ -75,8 +75,6 @@ class PictureLoader:
             self.display_imagine(hidden_card_label)  # Znovu vykreslit kartu s pravou hodnotou
             self.hidden_card = None  # Skrytá karta byla odhalena
 
-
-
     def show_oponent_card(self):
         if len(self.oponent_image_labels) < self.max_oponent_card:  # check if opponent's card count is less than maximum cards
             self.random_number = random.randrange(0, len(self.cards))
@@ -102,6 +100,20 @@ class PictureLoader:
             del self.cards[self.random_number]
 
 
+
+
+
+    def reset_cards(self):
+        for label in self.image_labels + self.oponent_image_labels:
+            label.destroy()
+        self.image_labels = []
+        self.oponent_image_labels = []
+        self.hidden_card = None
+        self.hidden_card_added = False  # <-- Resetujeme příznak!
+
+        # Znovu načíst všechny karty ze souboru JSON
+        with open('cards.json', 'r') as file:
+            self.cards = json.load(file)
 
 
 
