@@ -126,7 +126,7 @@ def play_again():
 
     # Reset skóre v GUI
     score_label.config(text="Score")
-    opponent_score_label.config(text="Bot")
+    opponent_score_label.config(text="Bot score")
 
     # Smaž všechny obrázky karet
     picture.reset_cards()
@@ -137,16 +137,12 @@ def play_again():
             widget.destroy()
 
     # Obnov tlačítka
-    third_button.place(x=30, y=380)
     first_button.place_forget()
     second_button.place_forget()
     play_again_button.place_forget()
     first_button.place_forget()
     third_button.place(x=30, y=380)
 
-
-
-# Button
 # tlačítko pro líznutí karty
 first_button = ttk.Button(my_window, width=8, text="draw", style="MyButton.TButton", 
                           command=lambda: [picture.show_card(), game_score(), opponent_draw()])
