@@ -31,16 +31,21 @@ def end_game():
     second_button.place_forget()
     text_result = ""
 
-    if total_score == 21 and opponent_total_score == 21:
+    if total_score == opponent_total_score:
         text_result = "DRAW"
+        my_window.config(bg="#46b10d",)
     elif total_score > opponent_total_score and total_score <= 21:
         text_result = "WIN!!!"
+        my_window.config(bg="#c46f14",)
     elif total_score < opponent_total_score and opponent_total_score <= 21:
         text_result = "LOSS"
+        my_window.config(bg="#724cac",)
     elif opponent_total_score > 21:
         text_result = "WIN!!!"
+        my_window.config(bg="#c46f14",)
     elif total_score > 21:
         text_result = "LOSS"
+        my_window.config(bg="#724cac",)
 
     result_label = Label(my_window, text=text_result, width=8, bg = '#818DF5', relief= "raised", font= ("Helvetica", 12))
     result_label.place(x=30, y=380)
@@ -168,10 +173,6 @@ score_label.place(x = 30, y = 300)
 
 opponent_score_label = Label(width=8, bg = '#818DF5', relief= "raised", font= ("Helvetica", 12), text = "Bot score")
 opponent_score_label.place(x = 200, y = 300)
-
-# # nahradí se tlačítko "začít hru" za "lízni si"
-# if first_button.winfo_ismapped():
-#     first_button.place_forget()
 
 # Main loop
 my_window.mainloop()
