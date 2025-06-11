@@ -1,5 +1,7 @@
 from tkinter import *
 
+# tato třída vytvoří nové okno, kde budou vysvětlena pravidla hry
+
 def show_rules(my_window):
     rules_window = Toplevel(my_window)  # Create a new top-level window
     rules_window.minsize(900, 380)
@@ -14,7 +16,7 @@ def show_rules(my_window):
     2. Hodnota karet:
        - Číselné karty (2–10) mají svou nominální hodnotu.
        - Karty král, dáma, kluk (J, Q, K) mají hodnotu 10.
-       - Eso (A) má hodnotu buď 1 nebo 11, záleží na tom, co je pro hráče výhodnější.
+       - Eso (A) má v této verze hry hodnotu 11.
 
     3. Průběh hry:
        - Každý hráč (včetně krupiéra) dostane na začátku dvě karty. Krupiér má jednu kartu odhalenou.

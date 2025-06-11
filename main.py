@@ -3,25 +3,45 @@ from tkinter import *
 from tkinter import ttk
 from game_rules import show_rules
 from pictures_loader import PictureLoader
+from PIL import Image, ImageTk
+from gui import run_app
 
 # main window
 my_window = Tk()
 my_window.minsize(400, 450)
 my_window.resizable(False, False)
 my_window.title("Black Jack")
-my_window.config(bg="#64a367",)
+
+# Load and set dark wood background image
+wood_img = Image.open("wood_bg.jpg").resize((400, 450))
+wood_bg = ImageTk.PhotoImage(wood_img)
+bg_label = Label(my_window, image=wood_bg)
+bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
 #labbel and button design
 style = ttk.Style(my_window)
-#button designs
-style.configure("MyButton.TButton",
-                font=("Helvetica", 10),
-                foreground="Black",
-                background="#818DF5",
-                #bordercolor = "#4D5DB5",
-                #borderwidth = 20,
-                padding=4,
-                relief="sunken")
+
+# Use a theme that supports more styling options
+style.theme_use('clam')
+
+# Fancy button style
+style.configure(
+    "FancyButton.TButton",
+    font=("Helvetica", 11, "bold"),
+    foreground="#ffffff",
+    background="#4D5DB5",
+    borderwidth=2,
+    focusthickness=3,
+    focuscolor="#818DF5",
+    padding=8,
+    relief="raised"
+)
+style.map(
+    "FancyButton.TButton",
+    background=[("active", "#818DF5"), ("pressed", "#2E386B")],
+    foreground=[("active", "#FFD700"), ("pressed", "#FFD700")],
+    relief=[("pressed", "sunken"), ("!pressed", "raised")]
+)
 
 # funkce která se zavolá na konci hry a vyhodnotí hru  
 def end_game():
@@ -47,11 +67,33 @@ def end_game():
         text_result = "LOSS"
         my_window.config(bg="#724cac",)
 
-    result_label = Label(my_window, text=text_result, width=8, bg = '#818DF5', relief= "raised", font= ("Helvetica", 12))
-    result_label.place(x=30, y=380)
+    # Choose style based on result - win draw or loss
+    if text_result == "WIN!!!":
+        result_bg = "#FFD700"   # Gold
+        result_fg = "#232946"   # Dark text
+    elif text_result == "LOSS":
+        result_bg = "#e74c3c"   # Red
+        result_fg = "#ffffff"   # White text
+    else:  # DRAW
+        result_bg = "#818DF5"   # Blue
+        result_fg = "#ffffff"   # White text
+
+    result_label = Label(
+        my_window,
+        text=text_result,
+        width=10,
+        bg=result_bg,
+        fg=result_fg,
+        relief="ridge",
+        font=("Helvetica", 18, "bold"),
+        bd=4,
+        padx=12,
+        pady=8
+    )
+    result_label.place(x=200, y=170)
 
     global play_again_button
-    play_again_button = ttk.Button(my_window, width=10, text="Play Again", style="MyButton.TButton",
+    play_again_button = ttk.Button(my_window, width=10, text="Play Again", style="FancyButton.TButton",
                                    command=play_again)
     play_again_button.place(x=120, y=380)
 
@@ -149,30 +191,52 @@ def play_again():
     third_button.place(x=30, y=380)
 
 # tlačítko pro líznutí karty
-first_button = ttk.Button(my_window, width=8, text="draw", style="MyButton.TButton", 
+first_button = ttk.Button(my_window, width=8, text="Hit", style="FancyButton.TButton", 
                           command=lambda: [picture.show_card(), game_score(), opponent_draw()])
 first_button.place(x=30, y=380)
 
 # tlačítko pro ukončení hry
-second_button = ttk.Button(my_window, width=8, text="end", style="MyButton.TButton",
+second_button = ttk.Button(my_window, width=8, text="End", style="FancyButton.TButton",
                              command = lambda : [end_game(),picture.reveal_hidden_card()])
 
 # tlačítko pro začátek hry
-third_button = ttk.Button(my_window, width=8, text="start", style="MyButton.TButton",
+third_button = ttk.Button(my_window, width=8, text="start", style="FancyButton.TButton",
                              command= lambda : [deal_initial_cards_for_player(), second_button.place(x=200, y = 380),third_button.place_forget()])
 third_button.place(x=30, y=380)
 
 #button for show game rules
-rules_button = ttk.Button(my_window, width=2, text="?", style="MyButton.TButton",  
+rules_button = ttk.Button(my_window, width=2, text="?", style="FancyButton.TButton",  
                             command= lambda : show_rules(my_window))
 rules_button.place(x=350, y = 20)
 
-# game description labels, label je informativní a ve finální verzi není aplikovaný
-score_label = Label(width=8, bg = '#818DF5', relief= "raised", font= ("Helvetica", 12), text = "Score")
-score_label.place(x = 30, y = 300)
+# Labels for scores
+score_label = Label(
+    my_window,
+    width=8,
+    bg="#232946",           # Dark background
+    fg="#FFD700",           # Gold text
+    relief="groove",        # 3D border
+    font=("Helvetica", 12, "bold"),
+    bd=3,                   # Border width
+    padx=10,                # Horizontal padding
+    pady=5,                 # Vertical padding
+    text="Score"
+)
+score_label.place(x=30, y=300)
 
-opponent_score_label = Label(width=8, bg = '#818DF5', relief= "raised", font= ("Helvetica", 12), text = "Bot score")
-opponent_score_label.place(x = 200, y = 300)
+opponent_score_label = Label(
+    my_window,
+    width=8,
+    bg="#232946",
+    fg="#FFD700",
+    relief="groove",
+    font=("Helvetica", 12, "bold"),
+    bd=3,
+    padx=10,
+    pady=5,
+    text="Bot score"
+)
+opponent_score_label.place(x=200, y=300)
 
 # Main loop
 my_window.mainloop()
