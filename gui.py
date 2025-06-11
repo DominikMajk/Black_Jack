@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 from pictures_loader import PictureLoader
 from game_rules import show_rules
 from game_logic import GameLogic
+from tkinter import Label
 
 def run_app():
     my_window = Tk()

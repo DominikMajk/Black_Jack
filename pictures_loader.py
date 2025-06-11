@@ -40,6 +40,8 @@ class PictureLoader:
         image_label.img = image_format
 
     def count_score(self, card):
+        if "value" not in card:
+            return 0  # or handle as needed
         value = int(card["value"])
         if value > 10:
             return 11
